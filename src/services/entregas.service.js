@@ -11,6 +11,10 @@ export class entregasService {
         return this.repository.buscarPorId(id);
     }
 
+    async historicoPorId(id) {
+        return this.repository.historicoPorId(id);
+    }
+
     async criar(dados) {
         return this.repository.criar(dados);
     }

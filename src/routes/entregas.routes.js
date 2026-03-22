@@ -1,9 +1,9 @@
+
 import {Router} from 'express';
 import { entregasDatabase } from "../database/entregas.database.js";
 import { entregasRepository } from "../repositories/entregas.repository.js";
 import { entregasService } from "../services/entregas.service.js";
 import { entregasController } from "../controllers/entregas.controller.js";
-
 
 
 const entregasRouter = new Router();
@@ -15,5 +15,8 @@ const controller = new entregasController(service);
 
 entregasRouter.get('/', (req, res) => controller.listarTodos(req, res));
 entregasRouter.get('/:id', (req, res) => controller.buscarPorId(req, res));
+entregasRouter.get('/:id/historico', (req, res) => controller.historicoPorId(req, res));
+entregasRouter.post('/', (req, res) => controller.criar(req, res));
+
 
 export {entregasRouter};

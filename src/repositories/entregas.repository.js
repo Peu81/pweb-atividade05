@@ -11,6 +11,14 @@ export class entregasRepository {
         return this.database.buscarPorId(Number(id));
     }
 
+    async historicoPorId(id) {
+        return this.database.historicoPorId(Number(id));
+    }
+
+    async criarPorId(id) {
+        return this.database.historicoPorId(Number(id))
+    }
+
     async criar(dados) {
         return this.database.criar(dados);
         };
@@ -18,5 +26,4 @@ export class entregasRepository {
     async atualizar(id, dados) {
         return this.database.atualizar(Number(id), dados);
     }
-
 }

@@ -1,7 +1,7 @@
 export class entregasDatabase {
   constructor() {
     this.entregas = [];
-    this.nextId = 3;
+    this.nextId = 1;
   }
 
     getEntregas() {
@@ -19,6 +19,12 @@ export class entregasDatabase {
     buscarPorId(id) {
         return this.entregas.find((e) => e.id === Number(id));
         }
+
+    historicoPorId(id) {
+        const entrega = this.entregas.find((e) => e.id === Number(id));
+
+        return entrega ? entrega.historico : null;
+    }
 
     criar(dados) {
         const novaEntrega = {id: this.generateId(), ...dados};

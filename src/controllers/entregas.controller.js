@@ -26,6 +26,11 @@ export class entregasController {
         }
     }
 
+    async historicoPorId(req, res) {
+        const historico = await this.service.historicoPorId(Number(req.params.id));
+        res.json(historico);
+    }
+
     async criar(req, res, next) {
         try {
             const novaEntrega = await this.service.criar(req.body);
