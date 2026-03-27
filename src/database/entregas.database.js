@@ -30,6 +30,15 @@ export class entregasDatabase {
         return this.motoristas.find((m) => m.cpf === cpf);
     }
 
+    listarMotoristas() {
+        return this.motoristas;
+    }
+
+    motoristaPorId(id) {
+        const motorista = this.motoristas.find((m) => m.id === Number(id));
+        return motorista;
+    }
+
     historicoPorId(id) {
         const entrega = this.entregas.find((e) => e.id === Number(id));
 

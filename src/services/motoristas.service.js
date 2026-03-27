@@ -21,4 +21,20 @@ export class motoristasService {
 
         return this.repository.cadastrarMotorista(informacoesMotorista);
     }
+
+    async listarMotoristas() {
+        return this.repository.listarMotoristas()
+    }
+
+    async motoristaPorId(id) {
+        const motorista = await this.repository.motoristaPorId(Number(id));
+
+        if (!motorista) {
+            const error = new Error("Motorista não encontrado!");
+            error.status = 404;
+            throw error;
+        }
+
+        return motorista;
+    }
 }

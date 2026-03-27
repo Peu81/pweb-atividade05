@@ -11,4 +11,11 @@ export class motoristasRepository {
         return this.database.buscarPorCpf(cpf);
     }
     
+    async listarMotoristas() {
+        return this.database.listarMotoristas();
+    }
+
+    async motoristaPorId(id) {
+        return this.database.motoristaPorId(Number(id));
+    }
 }
