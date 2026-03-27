@@ -1,6 +1,7 @@
 export class entregasDatabase {
   constructor() {
     this.entregas = [];
+    this.motoristas = [];
     this.nextId = 1;
 
   }
@@ -25,6 +26,10 @@ export class entregasDatabase {
         return this.entregas.find((e) => e.id === Number(id));
         }
 
+    buscarPorCpf(cpf) {
+        return this.motoristas.find((m) => m.cpf === cpf);
+    }
+
     historicoPorId(id) {
         const entrega = this.entregas.find((e) => e.id === Number(id));
 
@@ -43,4 +48,11 @@ export class entregasDatabase {
         this.entregas[indice] = {...this.entregas[indice], ...dados};
         return this.entregas[indice];
         }
+
+    cadastrarMotorista(dadosMotorista) {
+        const novoMotorista = {id: this.generateId(), ...dadosMotorista};
+        this.motoristas.push(novoMotorista);
+        return novoMotorista;
+    }
 }
+

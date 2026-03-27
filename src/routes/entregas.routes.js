@@ -4,22 +4,30 @@ import { entregasDatabase } from "../database/entregas.database.js";
 import { entregasRepository } from "../repositories/entregas.repository.js";
 import { entregasService } from "../services/entregas.service.js";
 import { entregasController } from "../controllers/entregas.controller.js";
+import { motoristasRepository } from '../repositories/motoristas.repository.js';
+import { motoristasService } from '../services/motoristas.service.js';
+import { motoristasController } from '../controllers/motoristas.controller.js';
 
 
 
 const entregasRouter = new Router();
+const motoristasRouter = new Router();
 
 const database = new entregasDatabase();
-const repository = new entregasRepository(database);
-const service = new entregasService(repository);
-const controller = new entregasController(service);
+const entregaRepo = new entregasRepository(database);
+const motoristaRepo = new motoristasRepository(database)
+const entregaService = new entregasService(entregaRepo, motoristaRepo);
+const motoristaService = new motoristasService(motoristaRepo)
+const entregaController = new entregasController(entregaService);
+const motoristaController = new motoristasController(motoristaService);
 
-entregasRouter.get('/', (req, res, next) => controller.listarTodos(req, res, next));
-entregasRouter.get('/:id', (req, res, next) => controller.buscarPorId(req, res, next));
-entregasRouter.get('/:id/historico', (req, res, next) => controller.historicoPorId(req, res, next));
-entregasRouter.post('/', (req, res, next) => controller.criar(req, res, next));
-entregasRouter.patch('/:id/avancar', (req, res, next) => controller.avancaStatus(req, res, next));
-entregasRouter.patch('/:id/cancelar', (req, res, next) => controller.cancelar(req, res, next));
-
+entregasRouter.get('/', (req, res, next) => entregaController.listarTodos(req, res, next));
+entregasRouter.get('/:id', (req, res, next) => entregaController.buscarPorId(req, res, next));
+entregasRouter.get('/:id/historico', (req, res, next) => entregaController.historicoPorId(req, res, next));
+entregasRouter.post('/', (req, res, next) => entregaController.criar(req, res, next));
+entregasRouter.patch('/:id/avancar', (req, res, next) => entregaController.avancaStatus(req, res, next));
+entregasRouter.patch('/:id/cancelar', (req, res, next) => entregaController.cancelar(req, res, next));
+motoristasRouter.post('/', (req, res, next) => motoristaController.cadastrarMotorista(req, res, next))
 
 export {entregasRouter};
+export {motoristasRouter};

@@ -3,6 +3,7 @@ const fluxoEntrega = {
     "EM_TRANSITO": "ENTREGUE"
 }
 
+
 export class entregasService {
     constructor(repository) {
         this.repository = repository;

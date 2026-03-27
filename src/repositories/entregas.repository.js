@@ -3,8 +3,8 @@ export class entregasRepository {
         this.database = database;
     }
 
-    async listarTodos() {
-        return this.database.listarTodos();
+    async listarTodos(filtros) {
+        return this.database.listarTodos(filtros);
     }
 
     async listarPorStatus(status) {
@@ -13,10 +13,6 @@ export class entregasRepository {
 
     async buscarPorId(id) {
         return this.database.buscarPorId(Number(id));
-    }
-
-    async historicoPorId(id) {
-        return this.database.historicoPorId(Number(id));
     }
 
     async historicoPorId(id) {
