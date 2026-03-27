@@ -68,11 +68,20 @@ export class entregasController {
 
     async cancelar(req, res, next) {
         try {
-            const entrega = await this.service.atualizar(req.params.id, {status: "CANCELADA"});
+            const entrega = await this.service.cancelar(req.params.id);
             res.json(entrega);
         } catch (error) {
             next(error);
         }
 
+    }
+
+    async avancaStatus(req, res, next) {
+        try {
+            const entrega = await this.service.avancaStatus(req.params.id);
+            res.json(entrega);
+        } catch (error) {
+            next(error)
+        }
     }
 }

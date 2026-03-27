@@ -15,11 +15,11 @@ const service = new entregasService(repository);
 const controller = new entregasController(service);
 
 entregasRouter.get('/', (req, res, next) => controller.listarTodos(req, res, next));
-entregasRouter.get('/:id', (req, res) => controller.buscarPorId(req, res));
-entregasRouter.get('/:id/historico', (req, res) => controller.historicoPorId(req, res));
+entregasRouter.get('/:id', (req, res, next) => controller.buscarPorId(req, res, next));
+entregasRouter.get('/:id/historico', (req, res, next) => controller.historicoPorId(req, res, next));
 entregasRouter.post('/', (req, res, next) => controller.criar(req, res, next));
-entregasRouter.patch('/:id/avancar', (req, res, next) => controller.atualizar(req, res, next));
-entregasRouter.patch('/:id/cancelar', (req, res, next) => controller.atualizar(req, res, next));
+entregasRouter.patch('/:id/avancar', (req, res, next) => controller.avancaStatus(req, res, next));
+entregasRouter.patch('/:id/cancelar', (req, res, next) => controller.cancelar(req, res, next));
 
 
 export {entregasRouter};

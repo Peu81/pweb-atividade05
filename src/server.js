@@ -15,9 +15,8 @@ app.use(morgan(":method :url :status Body: :body "));
 app.use('/api/entregas', entregasRouter);
 
 app.use((err, req, res, next) => {
-    res.status(400).json({
-        erro: true,
-        mensagem: err.message
+    res.status(err.status || 500).json({
+        erro: err.message
     });
 });
 
