@@ -37,4 +37,20 @@ export class entregasRepository {
     async atualizar(id, dados) {
         return this.database.atualizar(Number(id), dados);
     }
+
+    async listaPorMotorista(motoristaId, status) {
+        let entregas = await this.database.listarTodos();
+
+        entregas = entregas.filter((e) => Number(e.motoristaId) === Number(motoristaId));
+
+        if (status) {
+            entregas = entregas.filter((e) => e.status === status);
+        }
+
+        console.log(entregas); 
+
+        return entregas;
+
+        
+    }
 }

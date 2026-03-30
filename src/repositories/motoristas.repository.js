@@ -15,7 +15,7 @@ export class motoristasRepository {
         return this.database.listarMotoristas();
     }
 
-    async motoristaPorId(id) {
+    async buscarPorId(id) {
         return this.database.motoristaPorId(Number(id));
     }
 }

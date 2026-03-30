@@ -2,16 +2,20 @@ export class entregasDatabase {
   constructor() {
     this.entregas = [];
     this.motoristas = [];
-    this.nextId = 1;
-
+    this.nextIdEntrega = 1;
+    this.nextIdMotorista = 1;
   }
 
     getEntregas() {
     return this.entregas;
     }
 
-    generateId() {
-        return this.nextId++;
+    gerarIdEntrega() {
+        return this.nextIdEntrega++;
+    }
+
+    gerarIdMotorista() {
+        return this.nextIdMotorista++;
     }
 
     listarTodos() {
@@ -46,7 +50,7 @@ export class entregasDatabase {
     }
 
     criar(dados) {
-        const novaEntrega = {id: this.generateId(), ...dados};
+        const novaEntrega = {id: this.gerarIdEntrega(), ...dados};
         this.entregas.push(novaEntrega);
         return novaEntrega;
         }
@@ -59,7 +63,7 @@ export class entregasDatabase {
         }
 
     cadastrarMotorista(dadosMotorista) {
-        const novoMotorista = {id: this.generateId(), ...dadosMotorista};
+        const novoMotorista = {id: this.gerarIdMotorista(), ...dadosMotorista};
         this.motoristas.push(novoMotorista);
         return novoMotorista;
     }

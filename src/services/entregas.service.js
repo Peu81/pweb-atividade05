@@ -5,8 +5,9 @@ const fluxoEntrega = {
 
 
 export class entregasService {
-    constructor(repository) {
-        this.repository = repository;
+    constructor(entregasRepository, motoristasRepository) {
+        this.repository = entregasRepository;
+        this.motoristasRepository = motoristasRepository;
     }
 
     async listarTodos(status) {
@@ -124,12 +125,62 @@ export class entregasService {
     }
 
 
+    async atribuiMotorista(entregaId, motoristaId) {
+        const entregaExiste = await this._entregaOuErro(entregaId)
+
+        if (entregaExiste.status !== "CRIADA") {
+            const error = new Error("Só é possivel atribuir entregas com status 'CRIADA'.");
+            error.status = 409;
+            throw error;         
+        }
+
+        const motorista = await this.motoristasRepository.buscarPorId(motoristaId);
+
+        if (!motorista) {
+            const error = new Error("Motorista inexistente.");
+            error.status = 404;
+            throw error;
+        }
+
+        if (motorista.status !== "ATIVO") {
+            const error = new Error("Não é possível atribuir entregas para motoristas inativos.");
+            error.status = 422;
+            throw error;   
+        }
+
+        let mensagem = ""; 
+
+        if (!entregaExiste.motoristaId) {
+            mensagem = `Motorista ${motorista.nome} atribuído.`;
+        }
+
+        else {
+            mensagem = `Motorista anterior substituido por ${motorista.nome}.`
+        }
+        
+        const novoHistorico = {
+        data: new Date().toISOString().split('T')[0],
+        descricao: mensagem
+        }
+
+        const dadosAtualizados = {
+            ...entregaExiste,
+            motoristaId: motoristaId,
+            historico: [...entregaExiste.historico, novoHistorico]
+        }
+        return this.repository.atualizar(entregaId, dadosAtualizados);        
+    }
+
+    async listaPorMotorista(motoristaId, status) {
+        return this.repository.listaPorMotorista(motoristaId, status);
+    }
+
     async _entregaOuErro(id) {
         const numId = Number(id);
 
         if (isNaN(numId)) {
             const erroIdInvalido = new Error("ID inválido");
-            error.status = 400;
+            erroIdInvalido.status = 400;
             throw erroIdInvalido;
         }
 
@@ -137,10 +188,12 @@ export class entregasService {
 
         if (!entrega) {
             const erroEntregaInexistente = new Error("Entrega inexistente!");
-            error.status = 404;
+            erroEntregaInexistente.status = 404;
             throw erroEntregaInexistente;
         }
         
         return entrega;
     }
 }
+
+
