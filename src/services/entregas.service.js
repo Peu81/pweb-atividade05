@@ -111,7 +111,7 @@ export class entregasService {
         const entregaExiste = await this._entregaOuErro(entregaId)
 
         if (entregaExiste.status !== "CRIADA") {
-            throw new AppError("Só é possivel atribuir entregas com status 'CRIADA'.", 409);         
+            throw new AppError("Só é possivel atribuir entregas com status 'CRIADA'.", 422);         
         }
 
         const motorista = await this.motoristasRepository.buscarPorId(motoristaId);
